@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 30px;">#</th>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Kategori</th>
                                         <th>Supplier</th>
@@ -41,9 +42,8 @@
                                     @foreach ($data as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td><img src="{{ $item->image }}" width="50" alt="Product">
-                                                <div class="d-inline-block ml-1">{{ $item->name }}</div>
-                                            </td>
+                                            <td><img src="{{ $item->image }}" width="50" alt="Product"></td>
+                                            <td>{{ $item->name }}</td>
                                             <td>{{ $item->kategori->name }}</td>
                                             <td>{{ $item->supplier->name }}</td>
                                             <td>{{ $item->harga_beli }}</td>
@@ -88,11 +88,11 @@
         var table = $("#table").DataTable({
             columnDefs: [{
                     orderable: false,
-                    targets: [9]
+                    targets: [10]
                 },
                 {
                     searchable: false,
-                    targets: [9]
+                    targets: [10]
                 },
             ]
 
