@@ -89,9 +89,9 @@
                 <a href="{{ route('user.profile') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
-                    <a href="{{ route('company.general') }}" class="dropdown-item has-icon">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
+                <a href="{{ route('company.general') }}" class="dropdown-item has-icon">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
                 <div class="dropdown-divider"></div>
                 <a href="javascript:void(0);" onclick="logout_();" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
@@ -112,11 +112,11 @@
                         class="fas fa-database"></i><span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="nav-item {{ $title == 'Data Table' ? 'active' : '' }}"><a class="nav-link"
-                            href="{{ route('user.index') }}">Table</a></li>
+                            href="{{ route('product.index') }}">Product</a></li>
                     <li class="nav-item {{ $title == 'Data Category' ? 'active' : '' }}"><a class="nav-link"
-                            href="{{ route('user.index') }}">Category</a></li>
+                            href="{{ route('kategori.index') }}">Kategori</a></li>
                     <li class="nav-item {{ $title == 'Data Menu' ? 'active' : '' }}"><a class="nav-link"
-                            href="{{ route('user.index') }}">Menu</a></li>
+                            href="{{ route('supplier.index') }}">Supplier</a></li>
                     <li class="nav-item {{ $title == 'Data User' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('user.index') }}">User</a></li>
                 </ul>

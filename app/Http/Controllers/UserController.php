@@ -25,17 +25,6 @@ class UserController extends Controller
         return view('user.data', compact('data'))->with(['company' => $this->company, 'title' => $this->title]);
     }
 
-    // public function index(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $data = User::with('roles')->get();
-    //         if ($request->email) {
-    //             $data = User::where('email', 'like', "%{$request->email}%")->get();
-    //         }
-    //         return DataTables::of($data)->toJson();
-    //     }
-    //     return view('user.data')->with(['comp' => $this->comp, 'title' => 'Data User']);
-    // }
     public function show(User $user)
     {
         abort(404);
