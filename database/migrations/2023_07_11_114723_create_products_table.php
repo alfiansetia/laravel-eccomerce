@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('harga_jual')->default(0);
             $table->integer('berat')->default(0);
             $table->integer('stock')->default(0);
+            $table->string('image')->nullable();
             $table->string('desc')->nullable();
             $table->unsignedBigInteger('kategori_id');
             $table->unsignedBigInteger('supplier_id');

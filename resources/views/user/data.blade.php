@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h4>{{ $title }}</h4>
+                        <h4>Data {{ $title }}</h4>
                         <div class="card-header-action">
                             <a href="{{ route('user.create') }}" class="btn btn-primary">
                                 Add

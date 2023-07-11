@@ -1,4 +1,9 @@
 @extends('layouts.template')
+
+@push('csslib')
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+@endpush
+
 @section('content')
     <div class="section-body">
         <div class="row">
@@ -56,8 +61,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="role">Role :</label>
-                                <select name="role" id="role"
-                                    class="form-control @error('role') is-invalid @enderror" required>
+                                <select name="role" id="role" style="width: 100%"
+                                    class="form-control select2 @error('role') is-invalid @enderror" required>
+                                    <option value="">Select Role</option>
                                     <option {{ $data->role == 'admin' ? 'selected' : '' }} value="admin">Admin</option>
                                     <option {{ $data->role == 'user' ? 'selected' : '' }} value="user">User</option>
                                 </select>
@@ -77,8 +83,20 @@
     </div>
 @endsection
 
+@push('jslib')
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
+
 @push('js')
     <script>
+        if (jQuery().select2) {
+            $(".select2").select2();
+        }
+
+        $('button[type=reset]').click(function() {
+            $('#role').val('{{ $data->role }}').change()
+        })
+
         $('form').submit(function() {
             $('button').prop('disabled', true);
             block();

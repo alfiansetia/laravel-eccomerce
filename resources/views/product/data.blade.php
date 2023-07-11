@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <h4>Data {{ $title }}</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('supplier.create') }}" class="btn btn-primary">
+                            <a href="{{ route('product.create') }}" class="btn btn-primary">
                                 Add
                             </a>
                         </div>
@@ -27,8 +27,13 @@
                                     <tr>
                                         <th style="width: 30px;">#</th>
                                         <th>Name</th>
-                                        <th>Telp</th>
-                                        <th>Address</th>
+                                        <th>Kategori</th>
+                                        <th>Supplier</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th>Berat</th>
+                                        <th>Stock</th>
+                                        <th>Desc</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -36,12 +41,19 @@
                                     @foreach ($data as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->name }}</td>
-                                            <td>{{ $item->telp }}</td>
-                                            <td>{{ $item->address }}</td>
+                                            <td><img src="{{ $item->image }}" width="50" alt="Product">
+                                                <div class="d-inline-block ml-1">{{ $item->name }}</div>
+                                            </td>
+                                            <td>{{ $item->kategori->name }}</td>
+                                            <td>{{ $item->supplier->name }}</td>
+                                            <td>{{ $item->harga_beli }}</td>
+                                            <td>{{ $item->harga_jual }}</td>
+                                            <td>{{ $item->berat }}</td>
+                                            <td>{{ $item->stock }}</td>
+                                            <td>{{ $item->desc }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('supplier.edit', $item->id) }}"
+                                                    <a href="{{ route('product.edit', $item->id) }}"
                                                         class="btn btn-sm btn-warning"><i class="far fa-edit"></i></a>
                                                     <button type="button" value="{{ $item->id }}"
                                                         onclick="deleteData('{{ $item->id }}')"
@@ -76,11 +88,11 @@
         var table = $("#table").DataTable({
             columnDefs: [{
                     orderable: false,
-                    targets: [4]
+                    targets: [9]
                 },
                 {
                     searchable: false,
-                    targets: [4]
+                    targets: [9]
                 },
             ]
 
@@ -96,7 +108,7 @@
             }).then(function(result) {
                 if (result) {
                     var deleteForm = $('#delete');
-                    deleteForm.attr('action', "{{ route('supplier.destroy', '') }}" + '/' + id);
+                    deleteForm.attr('action', "{{ route('product.destroy', '') }}" + '/' + id);
                     deleteForm.submit();
                     block();
                 }
