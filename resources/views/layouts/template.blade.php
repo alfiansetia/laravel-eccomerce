@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title }} &mdash; {{ $comp->name }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ $comp->fav }}" />
+    <title>{{ $title }} &mdash; {{ $company->name }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ $company->fav }}" />
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('library/@fortawesome/fontawesome-free/css/all.css') }}">
@@ -37,7 +37,7 @@
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; {{ $comp->name }} {{ date('Y') }}
+                    Copyright &copy; {{ $company->name }} {{ date('Y') }}
                     <div class="bullet"></div> Design By <a href="https://kacangan.net/">Alfi</a>
                 </div>
                 <div class="footer-right">

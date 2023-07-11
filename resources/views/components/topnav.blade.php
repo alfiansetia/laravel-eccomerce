@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg main-navbar">
-    <a href="{{ route('home') }}" class="navbar-brand sidebar-gone-hide">{{ $comp->name }}</a>
+    <a href="{{ route('home') }}" class="navbar-brand sidebar-gone-hide">{{ $company->name }}</a>
     <div class="navbar-nav">
         <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
     </div>
@@ -78,20 +78,20 @@
                 </div>
             </div>
         </li> -->
-        <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+        <li class="dropdown"><a href="#" data-toggle="dropdown"
+                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in {{ \Carbon\Carbon::parse(auth()->user()->last_login_at)->diffForHumans() }}</div>
+                <div class="dropdown-title">Logged in
+                    {{ \Carbon\Carbon::parse(auth()->user()->last_login_at)->diffForHumans() }}</div>
                 <a href="{{ route('user.profile') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
-                @role('admin')
-                <a href="{{ route('company.general') }}" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-                @endrole
+                    <a href="{{ route('company.general') }}" class="dropdown-item has-icon">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
                 <div class="dropdown-divider"></div>
                 <a href="javascript:void(0);" onclick="logout_();" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
@@ -106,35 +106,45 @@
             <li class="nav-item {{ $title == 'Dashboard' ? 'active' : '' }}">
                 <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="nav-item dropdown {{ $title == 'Data Table' || $title == 'Data Category' || $title == 'Data Menu' || $title == 'Data User' ? 'active' : '' }}">
-                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-database"></i><span>Master Data</span></a>
+            <li
+                class="nav-item dropdown {{ $title == 'Data Table' || $title == 'Data Category' || $title == 'Data Menu' || $title == 'Data User' ? 'active' : '' }}">
+                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
+                        class="fas fa-database"></i><span>Master Data</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item {{ $title == 'Data Table' ? 'active' : '' }}"><a class="nav-link" href="{{ route('table.index') }}">Table</a></li>
-                    <li class="nav-item {{ $title == 'Data Category' ? 'active' : '' }}"><a class="nav-link" href="{{ route('catmenu.index') }}">Category</a></li>
-                    <li class="nav-item {{ $title == 'Data Menu' ? 'active' : '' }}"><a class="nav-link" href="{{ route('menu.index') }}">Menu</a></li>
-                    @role('admin')
-                    <li class="nav-item {{ $title == 'Data User' ? 'active' : '' }}"><a class="nav-link" href="{{ route('user.index') }}">User</a></li>
-                    @endrole
+                    <li class="nav-item {{ $title == 'Data Table' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Table</a></li>
+                    <li class="nav-item {{ $title == 'Data Category' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Category</a></li>
+                    <li class="nav-item {{ $title == 'Data Menu' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Menu</a></li>
+                    <li class="nav-item {{ $title == 'Data User' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">User</a></li>
                 </ul>
             </li>
             <li class="nav-item {{ $title == 'New Order' ? 'active' : '' }}">
-                <a href="{{ route('cart.index') }}" class="nav-link"><i class="fas fa-cart-plus"></i><span>New Order</span></a>
+                <a href="{{ route('user.index') }}" class="nav-link"><i class="fas fa-cart-plus"></i><span>New
+                        Order</span></a>
             </li>
             <li class="nav-item dropdown {{ $title == 'Data Order' || $title == 'Request Stock' ? 'active' : '' }}">
-                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-exchange-alt"></i><span>Transaction</span></a>
+                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
+                        class="fas fa-exchange-alt"></i><span>Transaction</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item {{ $title == 'Data Order' ? 'active' : '' }}"><a class="nav-link" href="{{ route('order.index') }}">Order</a></li>
-                    <li class="nav-item {{ $title == 'Request Stock' ? 'active' : '' }}"><a class="nav-link" href="{{ route('reqstock.index') }}">Request Stock</a></li>
-                    <li class="nav-item {{ $title == 'Cancel Order' ? 'active' : '' }}"><a class="nav-link" href="{{ route('order.index') }}">Cancel Order</a></li>
+                    <li class="nav-item {{ $title == 'Data Order' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Order</a></li>
+                    <li class="nav-item {{ $title == 'Request Stock' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Request Stock</a></li>
+                    <li class="nav-item {{ $title == 'Cancel Order' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('user.index') }}">Cancel Order</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown {{ $title == 'Report' || $title == 'Report Kasir' ? 'active' : '' }}">
-                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Report</span></a>
+                <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
+                        class="far fa-clone"></i><span>Report</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item {{ $title == 'Report' ? 'active' : '' }}"><a href="{{ route('report.index') }}" class="nav-link">Sales</a></li>
-                    @role('admin')
-                    <li class="nav-item {{ $title == 'Report Kasir' ? 'active' : '' }}"><a href="{{ route('report.user') }}" class="nav-link">Kasir</a></li>
-                    @endrole
+                    <li class="nav-item {{ $title == 'Report' ? 'active' : '' }}"><a
+                            href="{{ route('user.index') }}" class="nav-link">Sales</a></li>
+                    <li class="nav-item {{ $title == 'Report Kasir' ? 'active' : '' }}"><a
+                            href="{{ route('user.index') }}" class="nav-link">Kasir</a></li>
                     <!-- <li class="nav-item"><a href="#" class="nav-link">Sales</a></li>
                     <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Hover Me</a>
                         <ul class="dropdown-menu">
