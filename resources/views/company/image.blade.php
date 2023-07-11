@@ -18,9 +18,7 @@
                 <div class="card-body">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item"><a href="{{ route('company.general') }}" class="nav-link">General</a></li>
-                        <li class="nav-item"><a href="{{ route('company.social') }}" class="nav-link">Social</a></li>
                         <li class="nav-item"><a href="{{ route('company.image') }}" class="nav-link active">Image</a></li>
-                        <li class="nav-item"><a href="{{ route('company.other') }}" class="nav-link">Other</a></li>
                     </ul>
                 </div>
             </div>
@@ -44,7 +42,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-text text-muted">The image must have a maximum size of 2MB</div>
-                                <img src="{{ $comp->logo }}" alt="Logo" width="100px" height="100px">
+                                <img src="{{ $company->logo }}" alt="Logo" width="100px" height="100px">
                             </div>
                         </div>
                         <div class="form-group row ">
@@ -58,7 +56,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-text text-muted">The image must have a maximum size of 1MB</div>
-                                <img src="{{ $comp->fav }}" alt="Favicon" width="30px" height="30px">
+                                <img src="{{ $company->fav }}" alt="Favicon" width="30px" height="30px">
                             </div>
                         </div>
 

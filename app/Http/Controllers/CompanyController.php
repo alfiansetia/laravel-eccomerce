@@ -39,30 +39,6 @@ class CompanyController extends Controller
         }
     }
 
-    public function social()
-    {
-        return view('company.social')->with(['company' => $this->company, 'title' => 'Social Setting']);
-    }
-
-    public function socialUpdate(Request $request)
-    {
-        $this->validate($request, [
-            'wa'        => 'required|max:15',
-            'fb'        => 'max:15|nullable',
-            'ig'        => 'max:15|nullable',
-        ]);
-        $update = $this->company->update([
-            'wa'        => $request->wa,
-            'fb'        => $request->fb,
-            'ig'        => $request->ig,
-        ]);
-        if ($update) {
-            return redirect()->route('company.social')->with('success', 'Success Update Data!');
-        } else {
-            return redirect()->route('company.social')->with('error', 'Failed Update Data!');
-        }
-    }
-
     public function image()
     {
         return view('company.image')->with(['company' => $this->company, 'title' => 'Image Setting']);
@@ -96,28 +72,6 @@ class CompanyController extends Controller
             return redirect()->route('company.image')->with('success', 'Success Update Data!');
         } else {
             return redirect()->route('company.image')->with('error', 'Failed Update Data!');
-        }
-    }
-
-    public function other()
-    {
-        return view('company.other')->with(['company' => $this->company, 'title' => 'Other Setting']);
-    }
-
-    public function otherUpdate(Request $request)
-    {
-        $this->validate($request, [
-            'footer_struk'  => 'required|max:100',
-            'tax'           => 'required|in:yes,no',
-        ]);
-        $update = $this->company->update([
-            'footer_struk'  => $request->footer_struk,
-            'tax'           => $request->tax,
-        ]);
-        if ($update) {
-            return redirect()->route('company.other')->with('success', 'Success Update Data!');
-        } else {
-            return redirect()->route('company.other')->with('error', 'Failed Update Data!');
         }
     }
 }
