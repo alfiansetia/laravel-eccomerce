@@ -70,6 +70,13 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="address">Address :</label>
+                                <textarea name="address" class="form-control @error('address') is-invalid @enderror" id="address" maxlength="150">{{ old('address') }}</textarea>
+                                @error('address')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
                             <button type="reset" id="reset" class="btn btn-warning"><i class="fas fa-undo mr-1"
                                     data-toggle="tooltip" title="Reset"></i>Reset</button>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane mr-1"
@@ -90,7 +97,7 @@
         if (jQuery().select2) {
             $(".select2").select2();
         }
-        
+
         $('button[type=reset]').click(function() {
             $('.select2').val('').change()
         })

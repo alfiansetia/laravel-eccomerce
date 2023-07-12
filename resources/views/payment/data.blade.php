@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <h4>Data {{ $title }}</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary">
+                            <a href="{{ route('payment.create') }}" class="btn btn-primary">
                                 Add
                             </a>
                         </div>
@@ -27,10 +27,8 @@
                                     <tr>
                                         <th style="width: 30px;">#</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>WA</th>
-                                        <th class="text-center">Role</th>
-                                        <th>Address</th>
+                                        <th>Acc Name</th>
+                                        <th>Acc Number</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -39,13 +37,11 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td>{{ $item->email }}</td>
-                                            <td>{{ $item->wa }}</td>
-                                            <td class="text-center">{{ $item->role }}</td>
-                                            <td>{{ $item->address }}</td>
+                                            <td>{{ $item->acc_name }}</td>
+                                            <td>{{ $item->acc_number }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('user.edit', $item->id) }}"
+                                                    <a href="{{ route('payment.edit', $item->id) }}"
                                                         class="btn btn-sm btn-warning"><i class="far fa-edit"></i></a>
                                                     <button type="button" value="{{ $item->id }}"
                                                         onclick="deleteData('{{ $item->id }}')"
@@ -80,11 +76,11 @@
         var table = $("#table").DataTable({
             columnDefs: [{
                     orderable: false,
-                    targets: [6]
+                    targets: [4]
                 },
                 {
                     searchable: false,
-                    targets: [6]
+                    targets: [4]
                 },
             ]
 
@@ -100,7 +96,7 @@
             }).then(function(result) {
                 if (result) {
                     var deleteForm = $('#delete');
-                    deleteForm.attr('action', "{{ route('user.destroy', '') }}" + '/' + id);
+                    deleteForm.attr('action', "{{ route('payment.destroy', '') }}" + '/' + id);
                     deleteForm.submit();
                     block();
                 }

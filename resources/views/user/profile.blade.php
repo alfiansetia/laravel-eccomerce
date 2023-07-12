@@ -76,6 +76,15 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="form-group row align-items-center">
+                                <label for="address" class="form-control-label col-sm-3 text-md-right">Address</label>
+                                <div class="col-sm-6 col-md-9">
+                                    <textarea name="address" class="form-control @error('address') is-invalid @enderror" id="address">{{ auth()->user()->address }}</textarea>
+                                    @error('address')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer bg-whitesmoke text-md-right">
                             <button type="submit" class="btn btn-primary" id="btn_save">Save Changes</button>

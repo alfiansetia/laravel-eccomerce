@@ -73,6 +73,7 @@ class UserController extends Controller
             'email'     => 'required|email|unique:users,email,' . $user->id,
             'password'  => 'min:5|nullable',
             'wa'        => 'required|max:15',
+            'address'   => 'required|max:150',
             'role'      => 'required|in:admin,user',
         ]);
         if ($request->filled('password')) {
@@ -85,6 +86,7 @@ class UserController extends Controller
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
             'wa'        => $request->wa,
+            'address'   => $request->address,
         ]);
         if ($user) {
             return redirect()->route('user.index')->with(['success' => 'Success Update Data']);

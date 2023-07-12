@@ -107,7 +107,7 @@
                 <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li
-                class="nav-item dropdown {{ $title == 'Product' || $title == 'Kategori' || $title == 'Supplier' || $title == 'User' ? 'active' : '' }}">
+                class="nav-item dropdown {{ $title == 'Product' || $title == 'Kategori' || $title == 'Supplier' || $title == 'User' || $title == 'Payment' ? 'active' : '' }}">
                 <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
                         class="fas fa-database"></i><span>Master Data</span></a>
                 <ul class="dropdown-menu">
@@ -117,6 +117,8 @@
                             href="{{ route('kategori.index') }}">Kategori</a></li>
                     <li class="nav-item {{ $title == 'Supplier' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('supplier.index') }}">Supplier</a></li>
+                    <li class="nav-item {{ $title == 'Payment' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('payment.index') }}">Payment</a></li>
                     <li class="nav-item {{ $title == 'User' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('user.index') }}">User</a></li>
                 </ul>
@@ -125,12 +127,12 @@
                 <a href="{{ route('user.index') }}" class="nav-link"><i class="fas fa-cart-plus"></i><span>New
                         Order</span></a>
             </li>
-            <li class="nav-item dropdown {{ $title == 'Data Order' || $title == 'Request Stock' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ $title == 'Order' || $title == 'Request Stock' ? 'active' : '' }}">
                 <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
                         class="fas fa-exchange-alt"></i><span>Transaction</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item {{ $title == 'Data Order' ? 'active' : '' }}"><a class="nav-link"
-                            href="{{ route('user.index') }}">Order</a></li>
+                    <li class="nav-item {{ $title == 'Order' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('order.index') }}">Order</a></li>
                     <li class="nav-item {{ $title == 'Request Stock' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('user.index') }}">Request Stock</a></li>
                     <li class="nav-item {{ $title == 'Cancel Order' ? 'active' : '' }}"><a class="nav-link"

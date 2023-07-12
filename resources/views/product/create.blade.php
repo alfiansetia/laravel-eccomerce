@@ -110,7 +110,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="desc">Desc :</label>
-                                <textarea name="desc" class="form-control @error('desc') is-invalid @enderror" id="desc">{{ old('desc') }}</textarea>
+                                <textarea name="desc" class="form-control @error('desc') is-invalid @enderror" id="desc" maxlength="150">{{ old('desc') }}</textarea>
                                 @error('desc')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
