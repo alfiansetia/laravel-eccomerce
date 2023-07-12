@@ -53,7 +53,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('payment', PaymentController::class);
     Route::resource('kategori', KategoriController::class);
     Route::resource('supplier', SupplierController::class);
+
+    // Route::get('product/{product:name}/detail', [ProductController::class, 'show'])->name('product.detail');
     Route::resource('product', ProductController::class);
+
     Route::post('order/{order}/set', [OrderController::class, 'set'])->name('order.set');
     Route::resource('order', OrderController::class);
 });

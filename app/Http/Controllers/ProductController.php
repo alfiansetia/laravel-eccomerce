@@ -45,7 +45,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required|max:25|min:3|unique:products,name',
+            'name'      => 'required|max:50|min:3|unique:products,name',
             'kategori'  => 'integer|exists:kategoris,id',
             'supplier'  => 'integer|exists:suppliers,id',
             'harga_beli' => 'required|integer|gte:0',
@@ -84,7 +84,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        abort(404);
+        dd($product);
+        // abort(404);
     }
 
     /**
@@ -110,7 +111,7 @@ class ProductController extends Controller
             abort(404);
         }
         $this->validate($request, [
-            'name'      => 'required|max:25|min:3|unique:products,name,' . $product->id,
+            'name'      => 'required|max:50|min:3|unique:products,name,' . $product->id,
             'kategori'  => 'integer|exists:kategoris,id',
             'supplier'  => 'integer|exists:suppliers,id',
             'harga_beli' => 'required|integer|gte:0',
