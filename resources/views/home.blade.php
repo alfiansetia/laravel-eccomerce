@@ -86,7 +86,8 @@
                     </div>
                     <ul class="list-group category_block">
                         @foreach ($kategori as $item)
-                            <li class="list-group-item"><a href="#">{{ $item->name }}</a></li>
+                            <li class="list-group-item"><a
+                                    href="{{ route('home') }}?kategory={{ $item->name }}">{{ $item->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -120,22 +121,25 @@
                                     <p>{{ $item->desc }}</p>
                                     <div class="article-cta">
                                         <button type="button" class="btn btn-danger">{{ $item->harga_jual }}</button>
-                                        <a href="#" class="btn btn-primary">Add to
-                                            cart</a>
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="addData('{{ $item->id }}')">Add to cart</button>
                                     </div>
                                 </div>
                             </article>
                         </div>
                     @endforeach
-
                     <div class="col-12 text-center">
                         {{ $product->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <form id="add" action="{{ route('cart.store') }}" method="POST">
+        <input type="hidden" name="product" id="product">
+        @csrf
+    </form>
 
     <!-- Footer -->
     {{-- <footer class="text-light">
@@ -202,4 +206,28 @@
 @endpush
 
 @push('js')
+    @error('product')
+        <script>
+            swal("Error", "{{ $message }}", 'error');
+        </script>
+    @enderror
+    <script>
+        function addData(id) {
+            swal({
+                title: 'Add to Cart?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then(function(result) {
+                if (result) {
+                    var addForm = $('#add');
+                    $('#product').val(id)
+                    addForm.submit();
+                    block();
+                }
+            })
+
+        }
+    </script>
 @endpush

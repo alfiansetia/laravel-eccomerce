@@ -123,9 +123,9 @@
                             href="{{ route('user.index') }}">User</a></li>
                 </ul>
             </li>
-            <li class="nav-item {{ $title == 'New Order' ? 'active' : '' }}">
-                <a href="{{ route('user.index') }}" class="nav-link"><i class="fas fa-cart-plus"></i><span>New
-                        Order</span></a>
+            <li class="nav-item {{ $title == 'Cart' ? 'active' : '' }}">
+                <a href="{{ route('cart.index') }}" class="nav-link"><i
+                        class="fas fa-cart-plus"></i><span>Cart</span></a>
             </li>
             <li class="nav-item dropdown {{ $title == 'Order' || $title == 'Request Stock' ? 'active' : '' }}">
                 <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i

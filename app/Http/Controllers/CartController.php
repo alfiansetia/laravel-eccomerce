@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $title = 'Cart';
+    private $company;
+
+    public function __construct()
+    {
+        $this->company = Company::first();
+    }
+
     public function index()
     {
-        //
+        $data = Cart::where('user_id', auth()->id())->get();
+        return view('cart.data', compact('data'))->with(['company' => $this->company, 'title' => $this->title]);
     }
 
     /**
@@ -28,7 +35,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            // 'product' => 'required|integer|exists:products,id|unique:carts,product_id,' . $request->product . ',id,user_id,' . auth()->id(),
+            'product' => 'required|integer|exists:products,id|unique:carts,product_id,user_id'
+        ]);
+
+        $cart = Cart::create([
+            'user_id'    => auth()->id(),
+            'product_id' => $request->product,
+            'total'      => 1,
+        ]);
+        if ($cart) {
+            return redirect()->back()->with(['success' => 'Success Insert Data']);
+        } else {
+            return redirect()->back()->with(['error' => 'Failed Insert Data']);
+        }
     }
 
     /**

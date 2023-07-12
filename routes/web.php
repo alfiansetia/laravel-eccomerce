@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
@@ -59,4 +60,5 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('order/{order}/set', [OrderController::class, 'set'])->name('order.set');
     Route::resource('order', OrderController::class);
+    Route::resource('cart', CartController::class);
 });
