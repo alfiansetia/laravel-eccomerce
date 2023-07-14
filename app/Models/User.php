@@ -22,7 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
         'wa',
+        'kota_id',
         'address',
+        'ship_name',
+        'ship_telp',
     ];
 
     /**
@@ -54,5 +57,10 @@ class User extends Authenticatable
     public function order()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function kota()
+    {
+        return $this->belongsTo(Kota::class);
     }
 }

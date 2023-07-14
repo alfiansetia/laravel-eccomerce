@@ -19,11 +19,15 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->string('wa')->nullable();
-            $table->string('address')->nullable();
             $table->datetime('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->unsignedBigInteger('kota_id')->nullable();
+            $table->string('ship_name')->nullable();
+            $table->string('ship_telp')->nullable();
+            $table->string('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('kota_id')->references('id')->on('kotas')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

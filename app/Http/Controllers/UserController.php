@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Kota;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create')->with(['company' => $this->company, 'title' => $this->title]);
+        $kota  = Kota::with('province')->get();
+        return view('user.create', compact('kota'))->with(['company' => $this->company, 'title' => $this->title]);
     }
 
     public function store(Request $request)
@@ -43,12 +45,16 @@ class UserController extends Controller
             'password'  => 'required|min:5',
             'wa'        => 'required|max:15',
             'role'      => 'required|in:admin,user',
+            'address'   => 'required|max:150',
+            'kota'      => 'required|integer|exists:kotas,id',
         ]);
         $user = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
             'wa'        => $request->wa,
+            'address'   => $request->address,
+            'kota_id'   => $request->kota,
         ]);
         if ($user) {
             return redirect()->route('user.index')->with(['success' => 'Success Insert Data']);
@@ -62,8 +68,9 @@ class UserController extends Controller
         if (!$user) {
             abort(404);
         }
-        $data = $user;
-        return view('user.edit', compact('data'))->with(['company' => $this->company, 'title' => $this->title]);
+        $data = $user->load('kota');
+        $kota  = Kota::with('province')->get();
+        return view('user.edit', compact(['data', 'kota']))->with(['company' => $this->company, 'title' => $this->title]);
     }
 
     public function update(Request $request, User $user)
@@ -74,7 +81,11 @@ class UserController extends Controller
             'password'  => 'min:5|nullable',
             'wa'        => 'required|max:15',
             'address'   => 'required|max:150',
+            'ship_name' => 'nullable|max:30',
+            'ship_telp' => 'nullable|max:15',
+            'address'   => 'required|max:150',
             'role'      => 'required|in:admin,user',
+            'kota'      => 'required|integer|exists:kotas,id'
         ]);
         if ($request->filled('password')) {
             $user->update([
@@ -87,6 +98,9 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
             'wa'        => $request->wa,
             'address'   => $request->address,
+            'kota_id'   => $request->kota,
+            'ship_name' => $request->ship_name,
+            'ship_telp' => $request->ship_telp,
         ]);
         if ($user) {
             return redirect()->route('user.index')->with(['success' => 'Success Update Data']);
@@ -156,6 +170,34 @@ class UserController extends Controller
             } else {
                 return redirect()->route('user.profile')->with(['error' => 'Failed Update Password!']);
             }
+        }
+    }
+
+    public function ship()
+    {
+        $kota = Kota::with('province')->get();
+        return view('user.ship', compact('kota'))->with(['company' => $this->company, 'title' => 'Profile Ship Setting']);
+    }
+
+    public function shipUpdate(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $this->validate($request, [
+            'name'      => 'required|max:30|min:3',
+            'telp'      => 'required|max:15|min:8',
+            'kota'      => 'required|integer|exists:kotas,id',
+            'address'   => 'required|max:150',
+        ]);
+        $update = $user->update([
+            'ship_name' => $request->name,
+            'ship_telp' => $request->telp,
+            'kota_id'   => $request->kota,
+            'address'   => $request->address,
+        ]);
+        if ($update) {
+            return redirect()->route('user.ship')->with('success', 'Success Update Profile!');
+        } else {
+            return redirect()->route('user.ship')->with('error', 'Failed Update Profile!');
         }
     }
 }

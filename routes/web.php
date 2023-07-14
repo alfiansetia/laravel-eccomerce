@@ -4,9 +4,11 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KotaController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +42,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/user/profile', [UserController::class, 'profileUpdate'])->name('user.profile.update');
     Route::get('/user/password', [UserController::class, 'password'])->name('user.password');
     Route::post('/user/password', [UserController::class, 'passwordUpdate'])->name('user.password.update');
+    Route::get('/user/ship', [UserController::class, 'ship'])->name('user.ship');
+    Route::post('/user/ship', [UserController::class, 'shipUpdate'])->name('user.ship.update');
 
     Route::get('/company/general', [CompanyController::class, 'general'])->name('company.general');
     Route::post('/company/general', [CompanyController::class, 'generalUpdate'])->name('company.general.update');
@@ -54,6 +58,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('payment', PaymentController::class);
     Route::resource('kategori', KategoriController::class);
     Route::resource('supplier', SupplierController::class);
+    Route::resource('province', ProvinceController::class);
+    Route::resource('kota', KotaController::class);
 
     // Route::get('product/{product:name}/detail', [ProductController::class, 'show'])->name('product.detail');
     Route::resource('product', ProductController::class);

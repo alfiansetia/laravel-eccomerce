@@ -72,7 +72,41 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="address">Address :</label>
+                                <label class="control-label" for="ship_name">Ship Name :</label>
+                                <input type="text" name="ship_name"
+                                    class="form-control @error('ship_name') is-invalid @enderror" id="ship_name"
+                                    placeholder="Please Enter Ship Name" minlength="3" maxlength="25"
+                                    value="{{ $data->ship_name }}">
+                                @error('ship_name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="ship_telp">Ship Telp :</label>
+                                <input type="tel" name="ship_telp"
+                                    class="form-control @error('ship_telp') is-invalid @enderror" id="ship_telp"
+                                    placeholder="Please Enter Ship Telp" maxlength="15" value="{{ $data->ship_telp }}">
+                                @error('ship_telp')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="kota">Kota :</label>
+                                <select name="kota" id="kota" style="width: 100%"
+                                    class="form-control select2 @error('kota') is-invalid @enderror" required>
+                                    <option value="">Select Kota</option>
+                                    @foreach ($kota as $item)
+                                        <option {{ $data->kota_id == $item->id ? 'selected' : '' }}
+                                            value="{{ $item->id }}">{{ $item->name }} {{ $item->province->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('kota')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="address">Ship Address :</label>
                                 <textarea name="address" class="form-control @error('address') is-invalid @enderror" id="address" maxlength="150">{{ $data->address }}</textarea>
                                 @error('address')
                                     <span class="error invalid-feedback">{{ $message }}</span>
@@ -102,6 +136,7 @@
 
         $('button[type=reset]').click(function() {
             $('#role').val('{{ $data->role }}').change()
+            $('#kota').val('{{ $data->kota_id }}').change()
         })
 
         $('form').submit(function() {

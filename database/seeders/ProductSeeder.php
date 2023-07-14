@@ -20,6 +20,7 @@ class ProductSeeder extends Seeder
             'harga_jual'    => 100000,
             'harga_beli'    => 80000,
             'berat'         => 100,
+            'stock'         => 5,
         ]);
     }
 }

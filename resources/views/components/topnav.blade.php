@@ -107,7 +107,7 @@
                 <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li
-                class="nav-item dropdown {{ $title == 'Product' || $title == 'Kategori' || $title == 'Supplier' || $title == 'User' || $title == 'Payment' ? 'active' : '' }}">
+                class="nav-item dropdown {{ $title == 'Product' || $title == 'Kategori' || $title == 'Supplier' || $title == 'User' || $title == 'Payment' || $title == 'Province' || $title == 'Kota' ? 'active' : '' }}">
                 <a href="javascript:void(0);" data-toggle="dropdown" class="nav-link has-dropdown"><i
                         class="fas fa-database"></i><span>Master Data</span></a>
                 <ul class="dropdown-menu">
@@ -119,6 +119,10 @@
                             href="{{ route('supplier.index') }}">Supplier</a></li>
                     <li class="nav-item {{ $title == 'Payment' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('payment.index') }}">Payment</a></li>
+                    <li class="nav-item {{ $title == 'Province' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('province.index') }}">Province</a></li>
+                    <li class="nav-item {{ $title == 'Kota' ? 'active' : '' }}"><a class="nav-link"
+                            href="{{ route('kota.index') }}">Kota</a></li>
                     <li class="nav-item {{ $title == 'User' ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('user.index') }}">User</a></li>
                 </ul>

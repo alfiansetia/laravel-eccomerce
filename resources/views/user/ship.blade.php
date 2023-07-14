@@ -2,6 +2,7 @@
 
 @push('csslib')
     <link rel="stylesheet" href="{{ asset('library/bootstrap-social/bootstrap-social.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @section('content')
@@ -19,16 +20,16 @@
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-pills flex-column">
-                            <li class="nav-item"><a href="{{ route('user.profile') }}" class="nav-link active">General</a>
+                            <li class="nav-item"><a href="{{ route('user.profile') }}" class="nav-link">General</a>
                             </li>
                             <li class="nav-item"><a href="{{ route('user.password') }}" class="nav-link">Password</a></li>
-                            <li class="nav-item"><a href="{{ route('user.ship') }}" class="nav-link">Ship</a></li>
+                            <li class="nav-item"><a href="{{ route('user.ship') }}" class="nav-link active">Ship</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <form id="setting-form" method="POST" action="{{ route('user.profile.update') }}">
+                <form id="setting-form" method="POST" action="{{ route('user.ship.update') }}">
                     @csrf
                     <div class="card" id="settings-card">
                         <div class="card-header">
@@ -36,12 +37,12 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row align-items-center">
-                                <label for="name" class="form-control-label col-sm-3 text-md-right">Full Name</label>
+                                <label for="name" class="form-control-label col-sm-3 text-md-right">Ship Name</label>
                                 <div class="col-sm-6 col-md-9">
                                     <input type="text" name="name"
                                         class="form-control @error('name') is-invalid @enderror" id="name"
                                         minlength="4" maxlength="25" placeholder="Please Input Full Name"
-                                        value="{{ auth()->user()->name }}" autofocus required>
+                                        value="{{ auth()->user()->ship_name }}" autofocus required>
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -50,13 +51,13 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="email" class="form-control-label col-sm-3 text-md-right">Email</label>
+                                <label for="telp" class="form-control-label col-sm-3 text-md-right">Ship Telp</label>
                                 <div class="col-sm-6 col-md-9">
-                                    <input type="text" name="email"
-                                        class="form-control @error('email') is-invalid @enderror" id="email"
-                                        minlength="4" maxlength="25" placeholder="Please Input Email"
-                                        value="{{ auth()->user()->email }}" required disabled>
-                                    @error('email')
+                                    <input type="tel" name="telp"
+                                        class="form-control @error('telp') is-invalid @enderror" id="telp"
+                                        minlength="3" maxlength="15" placeholder="Please Input Whatsapp"
+                                        value="{{ auth()->user()->ship_telp }}" required>
+                                    @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -64,16 +65,20 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="wa" class="form-control-label col-sm-3 text-md-right">Whatsapp</label>
+                                <label for="kota" class="form-control-label col-sm-3 text-md-right">Kota</label>
                                 <div class="col-sm-6 col-md-9">
-                                    <input type="tel" name="wa"
-                                        class="form-control @error('wa') is-invalid @enderror" id="wa" minlength="3"
-                                        maxlength="15" placeholder="Please Input Whatsapp" value="{{ auth()->user()->wa }}"
-                                        required>
-                                    @error('wa')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <select name="kota" id="kota" style="width: 100%"
+                                        class="form-control select2 @error('kota') is-invalid @enderror" required>
+                                        <option value="">Select Kota</option>
+                                        @foreach ($kota as $item)
+                                            <option {{ auth()->user()->kota_id == $item->id ? 'selected' : '' }}
+                                                value="{{ $item->id }}">{{ $item->name }}
+                                                {{ $item->province->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('kota')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -98,8 +103,20 @@
     </div>
 @endsection
 
+@push('jslib')
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
+
 @push('js')
     <script>
+        if (jQuery().select2) {
+            $(".select2").select2();
+        }
+
+        $('button[type=reset]').click(function() {
+            $('#kota').val('{{ auth()->user()->kota_id }}').change()
+        })
+
         $(document).ready(function() {
 
             $('form').submit(function() {
