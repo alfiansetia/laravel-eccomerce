@@ -132,6 +132,12 @@ class CartController extends Controller
             'courier' => 'required|in:pos,jne,tiki'
         ]);
 
+        $key = env('RAJAONGKIR_KEY');
+        $url = env('RAJAONGKIR_URL');
+        if (empty($key) || empty($url)) {
+            return redirect()->route('cart.index')->with(['error' => 'Error System, Hubungi Admin!']);
+        }
+
         $cart = Cart::all();
         if (empty($cart)) {
             return redirect()->route('cart.index')->with(['error' => 'Cart Kosong']);
@@ -152,16 +158,19 @@ class CartController extends Controller
         }
 
         $response = Http::withHeaders([
-            'key' => "4b92274fb285061ec830c70cb4fcaedb"
-        ])->post("https://api.rajaongkir.com/starter/cost", [
+            'key' => $key
+        ])->post($url . "/cost", [
             'origin'        => $origin,
             'destination'   => $destination,
             'weight'        => $weight,
             'courier'       => $request->courier
         ]);
-        $data = $response->json();
-
-        return view('cart.checkout', compact(['data', 'total', 'weight', 'payment']))->with(['company' => $this->company, 'title' => $this->title]);
+        if ($response->successful()) {
+            $data = $response->json();
+            return view('cart.checkout', compact(['data', 'total', 'weight', 'payment']))->with(['company' => $this->company, 'title' => $this->title]);
+        } else {
+            return redirect()->route('cart.index')->with(['error' => 'Error System, Hubungi Admin!']);
+        }
     }
 
 
