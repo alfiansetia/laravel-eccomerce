@@ -14,9 +14,10 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         Company::create([
-            'name'              => 'Bengkel',
-            'address'           => 'Jl Mbah pojok No 36',
-            'telp'              => '082324129752',
+            'name'      => 'Bengkel',
+            'address'   => 'Jl Mbah pojok No 36',
+            'telp'      => '082324129752',
+            'kota_id'   => 151
         ]);
     }
 }

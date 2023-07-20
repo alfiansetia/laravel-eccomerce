@@ -12,9 +12,9 @@
         $disable_checkout = false;
     @endphp
     @if (empty(auth()->user()->address) ||
-            empty(auth()->user()->ship->kota_id) ||
-            empty(auth()->user()->ship->ship_name) ||
-            empty(auth()->user()->ship->ship_telp))
+            empty(auth()->user()->kota_id) ||
+            empty(auth()->user()->ship_name) ||
+            empty(auth()->user()->ship_telp))
         @php
             $disable_checkout = true;
         @endphp
@@ -45,7 +45,6 @@
                                 <hr class="my-4">
                                 @php
                                     $total = 0;
-                                    $ongkir = 0;
                                 @endphp
 
                                 @forelse ($data as $item)
@@ -105,48 +104,43 @@
                         </div>
 
                         <div class="col-lg-4 bg-secondary">
-                            <div class="p-5">
-                                <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                                <hr class="my-4">
+                            <form action="{{ route('checkout') }}" method="GET">
+                                <div class="p-5">
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                    <hr class="my-4">
 
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h5 class="text-uppercase">items {{ count($data) }}</h5>
-                                    <h5>Rp {{ $total }}</h5>
-                                </div>
-                                <h5 class="text-uppercase mb-2">Ship To</h5>
-
-                                <div class="mb-2 pb-2">
-                                    <textarea name="address" class="form-control" id="address" disabled>{{ auth()->user()->address . ' ' . PHP_EOL . auth()->user()->kota->name . ', ' . auth()->user()->kota->province->name }}</textarea>
-                                    <label class="form-label mt-1" for="address">Edit shipping address from your
-                                        profile</label>
-                                </div>
-
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h5 class="text-uppercase">Ongkir </h5>
-                                    <h5>Rp {{ $ongkir }}</h5>
-                                </div>
-
-
-                                {{-- <h5 class="text-uppercase mb-2">Give code</h5>
-
-                                <div class="mb-2">
-                                    <div class="form-outline">
-                                        <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                        <label class="form-label" for="form3Examplea2">Enter your code</label>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h5 class="text-uppercase">items {{ count($data) }}</h5>
+                                        <h5>Rp {{ $total }}</h5>
                                     </div>
-                                </div> --}}
+                                    <h5 class="text-uppercase mb-2">Courier</h5>
+                                    <div class="mb-2 pb-2">
+                                        <select class="form-control" name="courier" id="courier" required>
+                                            <option value="">Select Courir</option>
+                                            <option {{ old('courier') == 'jne' ? 'selected' : '' }} value="jne">jne
+                                            </option>
+                                            <option {{ old('courier') == 'tiki' ? 'selected' : '' }} value="tiki">tiki
+                                            </option>
+                                            <option {{ old('courier') == 'pos' ? 'selected' : '' }} value="pos">pos
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <h5 class="text-uppercase mb-2">Ship To</h5>
+                                    <div class="mb-2 pb-2">
+                                        <textarea name="address" class="form-control" id="address" disabled>{{ auth()->user()->ship_name . ' (' . auth()->user()->ship_telp . ')' . PHP_EOL . auth()->user()->address . ', ' . (auth()->user()->kota->name ?? '') . ', ' . (auth()->user()->kota->province->name ?? '') }}</textarea>
+                                        <label class="form-label mt-1" for="address">Edit shipping address from your
+                                            <a href="{{ route('user.profile') }}">profile</a></label>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">Total price</h5>
+                                        <h5>{{ $total }}</h5>
+                                    </div>
 
-                                <hr class="my-4">
-
-                                <div class="d-flex justify-content-between mb-5">
-                                    <h5 class="text-uppercase">Total price</h5>
-                                    <h5>{{ $total + $ongkir }}</h5>
+                                    <button {{ $disable_checkout ? 'disabled' : '' }} type="submit"
+                                        class="btn btn-primary btn-block btn-lg"
+                                        onclick="console.log('otw')">Checkout</button>
                                 </div>
-
-                                <button {{ $disable_checkout ? 'disabled' : '' }} type="button"
-                                    class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Checkout</button>
-
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -218,7 +212,7 @@
 @endpush
 
 @push('js')
-    @error('total')
+    @error('courier')
         <script>
             swal("Error", "{{ $message }}", 'error');
         </script>
@@ -227,6 +221,28 @@
         $('form').submit(function() {
             $('button').prop('disabled', true);
             block();
+        })
+
+        $('#tes').change(function() {
+            let val = $(this).val()
+            console.log(val);
+            $.get("{{ route('cek.ongkir') }}", {
+                "weight": 1000,
+                "courier": val
+            }).done(function(res) {
+                console.log(res.length)
+                if (res.length < 1) {
+                    alert('no opt')
+                } else {
+                    for (let i = 0; i < res[0].costs.length; i++) {
+                        console.log(res[0].costs[i]['service']);
+                        let opt = new Option(res[0].costs[i]['service'], res[0].costs[i]['service']);
+                        $('#tes2').append(opt)
+                    }
+                }
+            }).fail(function(xhr) {
+                console.log(xhr)
+            })
         })
 
         function changeData(elemen) {

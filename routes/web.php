@@ -35,8 +35,9 @@ Auth::routes([
     'verify' => false,   // Routes of Email Verification
 ]);
 
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::post('/user/profile', [UserController::class, 'profileUpdate'])->name('user.profile.update');
@@ -67,4 +68,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('order/{order}/set', [OrderController::class, 'set'])->name('order.set');
     Route::resource('order', OrderController::class);
     Route::resource('cart', CartController::class);
+
+    Route::get('/cek', [HomeController::class, 'cek'])->name('cek.ongkir');
+
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CartController::class, 'checkoutSave'])->name('checkout.save');
 });

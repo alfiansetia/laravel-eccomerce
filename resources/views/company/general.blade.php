@@ -58,6 +58,24 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
+                                <label for="kota" class="form-control-label col-sm-3 text-md-right">Kota</label>
+                                <div class="col-sm-6 col-md-9">
+                                    <select name="kota" id="kota" style="width: 100%"
+                                        class="form-control select2 @error('kota') is-invalid @enderror" required>
+                                        <option value="">Select Kota</option>
+                                        @foreach ($kota as $item)
+                                            <option {{ $company->kota_id == $item->id ? 'selected' : '' }}
+                                                value="{{ $item->id }}">{{ $item->name }}
+                                                {{ $item->province->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('kota')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
                                 <label for="address" class="form-control-label col-sm-3 text-md-right">Address</label>
                                 <div class="col-sm-6 col-md-9">
                                     <textarea class="form-control @error('address') is-invalid @enderror" name="address" id="address"
@@ -79,8 +97,20 @@
     </div>
 @endsection
 
+@push('jslib')
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
+
 @push('js')
     <script>
+        if (jQuery().select2) {
+            $(".select2").select2();
+        }
+
+        $('button[type=reset]').click(function() {
+            $('#kota').val('{{ $company->kota_id }}').change()
+        })
+
         $(document).ready(function() {
 
             $('form').submit(function() {

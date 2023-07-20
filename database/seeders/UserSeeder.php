@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'password'  => Hash::make('admin12345'),
             'role'      => 'admin',
             'wa'        => '08222588822',
-            'kota_id'   => 1,
+            'kota_id'   => 76,
             'address'   => 'Jl Bekasi No 1',
         ]);
 

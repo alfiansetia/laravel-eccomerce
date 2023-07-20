@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Kota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -17,7 +18,8 @@ class CompanyController extends Controller
 
     public function general()
     {
-        return view('company.general')->with(['company' => $this->company, 'title' => 'General Setting']);
+        $kota = Kota::all();
+        return view('company.general', compact('kota'))->with(['company' => $this->company, 'title' => 'General Setting']);
     }
 
     public function generalUpdate(Request $request)
@@ -25,11 +27,13 @@ class CompanyController extends Controller
         $this->validate($request, [
             'name'      => 'required|max:30',
             'telp'      => 'required|max:15',
+            'kota'      => 'required|integer|exists:kotas,id',
             'address'   => 'required|max:200',
         ]);
         $update = $this->company->update([
             'name'      => $request->name,
             'telp'      => $request->telp,
+            'kota_id'   => $request->kota,
             'address'   => $request->address,
         ]);
         if ($update) {

@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('receipt_name');
             $table->string('receipt_telp');
             $table->string('receipt_address');
+            $table->enum('courir', ['pos', 'jne', 'tiki', 'private'])->default('private');
+            $table->string('service')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('payment_id')->references('id')->on('payments')->cascadeOnUpdate()->nullOnDelete();
